@@ -100,12 +100,12 @@ El agente procesa la consulta y devuelve:
 
 ## Flujo del agente IA en n8n
 
-![Evidencia n8n](images/evidencia-1-n8n.jpg)
+![Evidencia n8n](images/evidencia-n8n.jpg)
 
 
 ## Base vectorial Qdrant
 
-![Evidencia Qdrant](images/evidencia-2-qdrant.jpg)
+![Evidencia Qdrant](images/evidencia-qdrant.jpg)
 
 ---
 
