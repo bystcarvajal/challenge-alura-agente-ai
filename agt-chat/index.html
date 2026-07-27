@@ -1,3 +1,61 @@
 
 
 
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Agente IA - PDF Chat</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="chat-container">
+
+    <header class="chat-header">
+        <h1>🤖 Agente IA</h1>
+        <p>Consulta información del documento</p>
+    </header>
+
+
+    <main id="chat-box" class="chat-box">
+
+        <div class="message ai">
+            <div class="bubble">
+                Hola 👋 Soy tu asistente IA.
+                Puedes realizar preguntas sobre el documento.
+            </div>
+        </div>
+
+    </main>
+
+
+    <footer class="chat-input">
+
+        <input 
+            id="question"
+            type="text"
+            placeholder="Escribe tu pregunta..."
+            autocomplete="off"
+        >
+
+        <button id="send">
+            Enviar
+        </button>
+
+    </footer>
+
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
