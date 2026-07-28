@@ -1,161 +1,107 @@
-const webhookURL = 
-"https://bystcarvajal.app.n8n.cloud/webhook/pdf-chat";
+const API_URL="https://bystcarvajal.app.n8n.cloud/webhook/pdf-chat";
 
+const chat=document.getElementById("chat");
 
-const chatBox = document.getElementById("chat-box");
-const input = document.getElementById("question");
-const button = document.getElementById("send");
+const input=document.getElementById("question");
 
+const button=document.getElementById("send");
 
+function addMessage(text,type){
 
-function addMessage(text, sender){
+    const div=document.createElement("div");
 
+    div.className="message "+type;
 
-    const message = document.createElement("div");
+    div.innerHTML=text;
 
-    message.className = 
-        "message " + sender;
+    chat.appendChild(div);
 
+    chat.scrollTop=chat.scrollHeight;
 
-    const bubble = document.createElement("div");
-
-    bubble.className="bubble";
-
-    bubble.textContent=text;
-
-
-    message.appendChild(bubble);
-
-
-    chatBox.appendChild(message);
-
-
-    chatBox.scrollTop =
-        chatBox.scrollHeight;
+    return div;
 
 }
 
+async function askAI(){
 
+    const question=input.value.trim();
 
-async function sendQuestion(){
-
-
-    const question = input.value.trim();
-
-
-    if(!question)
-        return;
-
+    if(question==="") return;
 
     addMessage(question,"user");
 
-
     input.value="";
 
+    const loading=addMessage("Pensando...","bot typing");
 
-    addMessage(
-        "Pensando... 🤔",
-        "ai"
-    );
+    try{
 
+        const response=await fetch(API_URL,{
 
-    const thinking =
-        chatBox.lastChild;
+            method:"POST",
 
+            headers:{
+                "Content-Type":"application/json"
+            },
 
+            body:JSON.stringify({
 
-    try {
+                question:question
 
+            })
 
-        const response = await fetch(
-            webhookURL,
-            {
+        });
 
-                method:"POST",
+        const data=await response.json();
 
-                headers:{
-                    "Content-Type":"application/json"
-                },
+        loading.remove();
 
+        let answer="";
 
-                body:JSON.stringify({
+        if(data.answer){
 
-                    question:question
-
-                })
-
-            }
-        );
-
-
-
-        if(!response.ok){
-
-            throw new Error(
-                "Error HTTP: "
-                + response.status
-            );
+            answer=data.answer;
 
         }
 
+        else if(data.output){
 
+            answer=data.output;
 
-        const data =
-            await response.json();
+        }
 
+        else if(data.response){
 
+            answer=data.response;
 
-        thinking.remove();
+        }
 
+        else{
 
+            answer=JSON.stringify(data,null,2);
 
-        addMessage(
-            data[0].output,
-            "ai"
-        );
+        }
 
+        addMessage(answer,"bot");
 
     }
-
 
     catch(error){
 
-
-        thinking.remove();
-
-
-        addMessage(
-            "❌ Error al comunicarse con el agente IA.",
-            "ai"
-        );
-
-
-        console.error(error);
+        loading.innerHTML="❌ Error de conexión.";
 
     }
-
 
 }
 
+button.addEventListener("click",askAI);
 
+input.addEventListener("keypress",function(e){
 
+    if(e.key==="Enter"){
 
-button.addEventListener(
-    "click",
-    sendQuestion
-);
-
-
-
-input.addEventListener(
-    "keydown",
-    function(event){
-
-        if(event.key==="Enter"){
-
-            sendQuestion();
-
-        }
+        askAI();
 
     }
-);
+
+});
