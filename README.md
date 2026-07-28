@@ -207,10 +207,15 @@ Se recomienda realizar desparasitaciones periódicas para evitar el aumento de l
 
 ![Evidencia n8n](images/evidencia-n8n.jpg)
 
-
 ## Base vectorial Qdrant
 
 ![Evidencia Qdrant](images/evidencia-qdrant.jpg)
+
+## Uso del agente de IA publicado
+
+![Evidencia Chat_Preguntas](images/evidencia-chat-1.jpg)
+
+![Evidencia Chat_Respuestas](images/evidencia-chat-2.jpg)
 
 ---
 
